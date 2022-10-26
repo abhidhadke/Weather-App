@@ -2,9 +2,9 @@
     package="com.abhidhadke.org.wheather">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="wheather"
+        android:label="Weather App"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/weather_app">
         <activity
             android:name=".MainActivity"
             android:exported="true"

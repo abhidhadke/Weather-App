@@ -74,8 +74,7 @@ class _HomeState extends State<Home> {
       aqi = 'Very Poor';
     }
 
-    void getCity (String loc) async {
-
+    Future<void> getCity (String loc) async {
 
       Worker instance1 = Worker(location: loc);
       await instance1.getData();
@@ -126,12 +125,10 @@ class _HomeState extends State<Home> {
         body: Stack(
           children: [
             Image.asset('assets/$bgimage',fit: BoxFit.fill,height: double.infinity,width: double.infinity,),
-            Container(decoration: const BoxDecoration(color: Colors.black38),),
-
+            Container(decoration: const BoxDecoration(color: Colors.black45),),
             SafeArea(
               child: SearchBarAnimation(
-                textEditingController: TextEditingController(
-                ),
+                textEditingController: TextEditingController(),
                 isOriginalAnimation: false,
                 enableKeyboardFocus: true,
                 trailingWidget: const Icon(Icons.search, color: Colors.white,),
