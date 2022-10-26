@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'dart:async';
 
 
@@ -16,6 +17,12 @@ class Worker{
   late int aqi; // Air quality Index
   late String icon; // Icon of the current weather
   late String country; // name of the country
+  late String datetime;
+  late String tempDescp;
+  late int timezone;
+  late String city;
+  late String state;
+  late int id;
   String api = '7db29e6828110cfbb21f51b52d838653'; // Api for OpenWeatherApi
 
 
@@ -31,24 +38,33 @@ class Worker{
       lat = cordsData['lat'];
       lon = cordsData['lon'];
       country = cordsData['country'];
+      city = cordsData['name'];
+      state = cordsData['state'];
 
       // getting data
-      var url = Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$api');
+      var url = Uri.parse('https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$api&units=metric');
       var aqiUrl = Uri.parse('https://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$api');
       var response = await http.get(url);
       var aqiRes = await http.get(aqiUrl);
 
-      // getting location
+      // parsing the data
       Map data = jsonDecode(response.body);
+      timezone = data['timezone'];
+
+
+      //getting temp,humidity
       Map mainData = data['main'];
       temp = mainData['temp'];
       humidity = mainData['humidity'];
+
 
       // getting temp description, icon
       List Weather = data['weather'];
       Map weatherData = Weather[0];
       tempType = weatherData['main'];
+      tempDescp = weatherData['description'];
       icon = weatherData['icon'];
+      id = weatherData['id'];
 
       // getting wind speed
       Map speed = data['wind'];
@@ -61,7 +77,8 @@ class Worker{
       Map main = AqiData1['main'];
       aqi = main['aqi'];
 
-
+      DateTime dtime = DateTime.now().add(Duration(seconds: timezone - DateTime.now().timeZoneOffset.inSeconds));
+      datetime = DateFormat.jm().format(dtime) + ' - ' + DateFormat('EEEE, d MMM yyyy').format(dtime);
 
     }
     catch(e){
@@ -74,3 +91,4 @@ class Worker{
   Worker({required this.location});
 
 }
+

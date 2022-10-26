@@ -21,13 +21,20 @@ class _LoadingState extends State<Loading> {
       Navigator.pushReplacementNamed(context, '/home', arguments: {
         'location': instance.location,
         'temp': instance.temp,
-        'description': instance.tempType,
+        'type': instance.tempType,
         'humidity': instance.humidity,
         'speed': instance.airSpeed,
         'aqi': instance.aqi,
         'icon': instance.icon,
-        'country': instance.country
+        'country': instance.country,
+        'time' : instance.datetime,
+        'description' : instance.tempDescp,
+        'city' : instance.city,
+        'state' : instance.state,
+        'id' : instance.id
       });
+
+
     }
     catch(e){
       SetData();
@@ -40,6 +47,7 @@ class _LoadingState extends State<Loading> {
     // TODO: implement initState
     super.initState();
     SetData();
+
   }
 
   @override
